@@ -105,3 +105,11 @@ Từ v5 trờ đi nếu không truyền dict vào thì sẽ tự động dùng d
 ```
 --rec_char_dict_path="/home/datdq/1WorkSpace/PaddleOCR/ppocr/utils/dict/ppocrv5_dict.txt"
 ```
+
+## 7. Chạy onnx infer gặp `[W:onnxruntime:Default, conv.cc:425 UpdateState] OP Conv(Conv.0) running in Fallback mode. May be extremely slow.`
+<img width="1160" height="260" alt="image" src="https://github.com/user-attachments/assets/5d432649-a10b-4b33-8dbf-82620ae1f61e" /> \
+Thực ra thì cũng không sao, nhưng nếu không muốn cái Warning này hiện lên nữa, vào `tools/infer/utility.py`, dòng **219**, chỉnh
+```
+{"device_id": args.gpu_id, "cudnn_conv_algo_search": "DEFAULT"},` -> `{"device_id": args.gpu_id, "cudnn_conv_algo_search": "EXHAUSTIVE"},
+```
+
