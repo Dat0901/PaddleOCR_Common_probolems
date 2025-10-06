@@ -3,19 +3,19 @@ Doc của paddleocr đã được cập nhật, giờ có cả PP-OCRv5 và Padd
 
 
 
-**12/5/2025**\ 
+**12/5/2025** \
 Doc của PaddleOCR \
 ![Screenshot from 2025-05-12 11-25-25](https://github.com/user-attachments/assets/cf0483f4-f83e-4d02-8bf2-d38c785e8777) \
 Không được cập nhật từ 2022 và chỉ dừng ở PP-OCRv3 \
 Nên check doc bằng tiếng Trung (tiếng Anh không được cập nhật và dừng ở v3) trong src sẽ có PP-OCRv4
 
 ## 1. Check lúc export từ .pdparams sang pdiparams của Recognition gặp   
-*WARNING: The shape of model params not matched with loaded params***
+`WARNING: The shape of model params not matched with loaded params`
 + Check xem đã tải cùng version file .yml và file Training_model
 + Check trong file .yml đã dùng đúng dictionary với Training_model (có nhiều dict kiểu en_dict.txt, ppocr_dict.txt, ...) 
 
 ## 2. Check lúc export từ .pdparams sang pdiparams gặp 
-*WARNING: The pretrained params not in model***
+`WARNING: The pretrained params not in model`
 ![Screenshot from 2025-05-06 16-04-50](https://github.com/user-attachments/assets/6043b634-2f3b-47f6-a1cf-659766fedee3)
 ![Screenshot from 2025-05-06 10-07-53](https://github.com/user-attachments/assets/62c799d2-831c-45ec-8794-b66edda0edac)
 + Check xem đã tải cùng version file .yml và file Training_model 
@@ -31,7 +31,7 @@ python3 tools/infer/predict_det.py \
 --det_model_dir="/home/datdq/1WorkSpace/PaddleOCR/output/205_final_output_best_acc_infer" \
 --image_dir="/home/datdq/1WorkSpace/lp_dataset/data_test_lp/test_img" \
 ```
-Thì model không trả về kết quả được như lúc test .pdparams do thiếu các bước preprocess, truyền thêm vào thì kết quả bằng lúc test .pdparams. \
+Thì model không trả về kết quả được như lúc test .pdparams do thiếu các bước preprocess, truyền thêm vào thì kết quả bằng lúc test .pdparams.
 ```
 # Inference with pdiparams
 python3 tools/infer/predict_det.py \
@@ -49,7 +49,7 @@ python3 tools/infer/predict_det.py --use_onnx=True \
  --det_limit_side_len=640 \
  --det_limit_type=min \
 ```
-Tương tự, **Recognition** cũng cần truyền thêm preprocess step vào \
+Tương tự, **Recognition** cũng cần truyền thêm preprocess step vào 
 ```
 python3 tools/infer/predict_rec.py --use_onnx=True \
  --rec_model_dir="/home/datdq/1WorkSpace/PaddleOCR/output/205_final_output_best_acc_infer.onnx" \
@@ -93,13 +93,13 @@ Những ảnh này thì thay vì cho vào det -> rec, thì cho thẳng vào rec 
 Các ảnh height >25 det bình thường
 
 ## 5. Chạy recognition của pdiparams hoặc onnx gặp 
- *InvalidArgumentError: Broadcast dimension mismatch. Operands could not be broadcast together with the shape of X and the shape of Y***
+ `InvalidArgumentError: Broadcast dimension mismatch. Operands could not be broadcast together with the shape of X and the shape of Y`
 ![Screenshot from 2025-05-12 11-42-43](https://github.com/user-attachments/assets/cc45774b-8656-4d1f-ae00-7657d4386d8c)
 
 Truyền thêm các preprocess vào như lỗi ở 3.
 
 ## 6. Chạy recognition gặp lỗi 
-*IndexError: list index out of range***
+`IndexError: list index out of range`
 ![image](https://github.com/user-attachments/assets/84ffaebf-b36e-4316-ab4a-7017023cf007) \
 Từ v5 trờ đi nếu không truyền dict vào thì sẽ tự động dùng dict ở dòng 33 của file *rec_postprocess.py* nên nếu dùng bản tiếng trung của rec như v5 thì phải truyền dict vào tìm `ppocrv5_dict.txt`
 ```
@@ -112,4 +112,5 @@ Thực ra thì cũng không sao, nhưng nếu không muốn cái Warning này hi
 ```
 {"device_id": args.gpu_id, "cudnn_conv_algo_search": "DEFAULT"},` -> `{"device_id": args.gpu_id, "cudnn_conv_algo_search": "EXHAUSTIVE"},
 ```
+Mặc dù làm cách này thì supress được warning, nhưng infer lúc này sẽ chậm hơn rất nhiều, nên tìm cách nào đó khác.
 
